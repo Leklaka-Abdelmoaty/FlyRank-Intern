@@ -47,3 +47,46 @@ curl http://localhost:3000/health
 ```json
 { "status": "ok" }
 ```
+## Stage 2 : Read: list and single task
+
+### Request : get /tasks/1
+
+```bash
+curl -i http://localhost:3000/tasks/1
+```
+
+### Response
+
+```
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 36
+ETag: W/"24-fIJvWZ/a7EGZk3iTRHDQYLmz2bw"
+Date: Mon, 20 Jul 2026 23:46:12 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"id":1,"title":"task1","done":true}
+```
+
+### Request : get /tasks/99
+
+```bash
+curl -i http://localhost:3000/tasks/99
+```
+
+### Response
+
+```
+HTTP/1.1 404 Not Found
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 29
+ETag: W/"1d-kQQdPQ+i/Wk9IgXh55Kh5auGltk"
+Date: Mon, 20 Jul 2026 23:47:31 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"error":"Task 99 not found"}
+```
