@@ -22,3 +22,28 @@ Keep-Alive: timeout=5
 
 {"message":"Hello World!"}
 ```
+## Stage 1 : Your first real endpoint
+
+### Request : get /
+
+```bash
+curl http://localhost:3000/
+```
+
+### Response
+
+```json
+{ "name": "Task API", "version": "1.0", "endpoints": ["/tasks"] }
+```
+
+### Request : get /health
+
+```bash
+curl http://localhost:3000/health
+```
+
+### Response
+
+```json
+{ "status": "ok" }
+```
