@@ -90,3 +90,46 @@ Keep-Alive: timeout=5
 
 {"error":"Task 99 not found"}
 ```
+## Stage 3 : Create: POST a new task
+
+### Request : successful POST
+
+```bash
+curl -i -X POST http://localhost:3000/tasks -H "Content-Type: application/json" -d '{"title":"Buy milk"}'
+```
+
+### Response
+
+```
+HTTP/1.1 201 Created
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 40
+ETag: W/"28-PpSBYV7i68cXyGc7AhjVpkZkY5Q"
+Date: Mon, 20 Jul 2026 23:55:15 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"id":4,"title":"Buy milk","done":false}
+```
+
+### Request : missing title
+
+```bash
+curl -i -X POST http://localhost:3000/tasks -H "Content-Type: application/json" -d '{}'
+```
+
+### Response
+
+```
+HTTP/1.1 400 Bad Request
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 23
+ETag: W/"17-i22p4FL6eG9sZYzIFCm/xvy/pHM"
+Date: Mon, 20 Jul 2026 23:56:09 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"error":"Title is required"}
+```

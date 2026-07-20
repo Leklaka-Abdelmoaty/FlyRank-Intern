@@ -35,3 +35,20 @@ app.get("/tasks/:id", (req, res) => {
   }
   res.status(200).json(task);
 });
+
+app.post("/tasks", (req, res) => {
+  const task = req.body;
+  if (!task || !task.title || task.title.trim() === "") {
+    return res.status(400).send({ error: "Title is required" });
+  }
+
+  const newTask = {
+    id: list.length + 1,
+    title: task.title,
+    done: false
+  };
+
+  list.push(newTask);
+
+  return res.status(201).json(newTask);
+});
