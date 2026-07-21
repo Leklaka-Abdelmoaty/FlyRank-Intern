@@ -114,16 +114,10 @@ Open:
 
 ```
 http://localhost:3000/docs
-```
 
-### Swagger Home
+## Swagger Demo
 
-> **📷 Insert Swagger UI screenshot here**
-
-```
-[ Swagger Screenshot ]
-```
-
+![Swagger Demo](swagger-demo.gif)
 ---
 
 # Project Structure
