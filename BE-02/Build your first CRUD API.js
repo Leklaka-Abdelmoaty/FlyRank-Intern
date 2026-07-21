@@ -91,3 +91,10 @@ app.delete("/tasks/:id", (req, res) => {
 
     return res.status(204).end();
 });
+
+app.get("/stats", (req, res) => {
+  const totalTasks = list.length;
+  const completedTasks = list.filter(task => task.done).length;
+  const pendingTasks = totalTasks - completedTasks;
+  res.status(200).json({ "total":totalTasks, "done":completedTasks, "pending":pendingTasks });
+});
