@@ -114,10 +114,12 @@ Open:
 
 ```
 http://localhost:3000/docs
+```
 
 ## Swagger Demo
 
 ![Swagger Demo](swagger-demo.gif)
+
 ---
 
 # Project Structure
