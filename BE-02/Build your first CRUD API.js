@@ -4,7 +4,7 @@ const port = 3000;
 app.use(express.json());
 
 const swaggerUi = require("swagger-ui-express");
-const swaggerDocument = require("E:\FlyRank Intern\FlyRank-Intern\BE-02\openapi.json");
+const swaggerDocument = require("./openapi.json");
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
