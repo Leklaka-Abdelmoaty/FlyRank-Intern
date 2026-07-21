@@ -3,6 +3,11 @@ const app = express();
 const port = 3000;
 app.use(express.json());
 
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("E:\FlyRank Intern\FlyRank-Intern\BE-02\openapi.json");
+
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.get("/", (req, res) => { res.status(200).json({ "name": "Task API", "version": "1.0", "endpoints": ["/tasks"] }) })
 
 app.get("/health", (req, res) => {
