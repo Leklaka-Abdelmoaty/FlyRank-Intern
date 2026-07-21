@@ -52,3 +52,37 @@ app.post("/tasks", (req, res) => {
 
   return res.status(201).json(newTask);
 });
+
+app.put("/tasks/:id", (req, res) => {
+  const task = req.body;
+  const taskId = parseInt(req.params.id);
+  const taskIndex = list.findIndex(task => task.id === taskId);
+  if (taskIndex === -1) {
+    return res.status(404).send({ error: `Task ${taskId} not found` });
+  }
+  if (!task || !task.title || task.title.trim() === "") {
+    return res.status(400).send({ error: "Bad Request" });
+  }
+  if (typeof task.done !== "boolean") {
+    return res.status(400).send({ error: "Bad Request" });
+  }
+  else {
+    list[taskIndex] = { ...list[taskIndex], title: task.title, done: task.done };
+    return res.status(200).json(list[taskIndex]);
+  }
+});
+
+
+app.delete("/tasks/:id", (req, res) => {
+    const taskId = parseInt(req.params.id);
+
+    const taskIndex = list.findIndex(task => task.id === taskId);
+
+    if (taskIndex === -1) {
+        return res.status(404).send({ error: `Task ${taskId} not found` });
+    }
+
+    list.splice(taskIndex, 1);
+
+    return res.status(204).end();
+});

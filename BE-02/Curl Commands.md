@@ -90,7 +90,8 @@ Keep-Alive: timeout=5
 
 {"error":"Task 99 not found"}
 ```
-## Stage 3 : Create: POST a new task
+## Stage 3 : create with validation
+
 
 ### Request : successful POST
 
@@ -132,4 +133,105 @@ Connection: keep-alive
 Keep-Alive: timeout=5
 
 {"error":"Title is required"}
+```
+## Stage 4 : Update & Delete (full CRUD)
+
+### Request : update task (replace title and/or done)
+
+```bash
+curl -i -X PUT http://localhost:3000/tasks/3 -H "Content-Type: application/json" -d '{"title":"Checkpoint2 updated","done":true}'
+```
+
+### Response (200 OK)
+
+```
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 50
+ETag: W/"32-jepLXie6TVWxwb/BpGeuN1OMyus"
+Date: Tue, 21 Jul 2026 00:02:35 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"id":3,"title":"Checkpoint2 updated","done":true}
+```
+
+### Request : update with empty/invalid body
+
+```bash
+curl -i -X PUT http://localhost:3000/tasks/3 -H "Content-Type: application/json" -d '{}'
+```
+
+### Response (400 Bad Request)
+
+```
+HTTP/1.1 400 Bad Request
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 23
+ETag: W/"17-i22p4FL6eG9sZYzIFCm/xvy/pHM"
+Date: Tue, 21 Jul 2026 00:03:08 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"error":"Bad Request"}
+```
+
+### Request : update unknown id
+
+```bash
+curl -i -X PUT http://localhost:3000/tasks/99 -H "Content-Type: application/json" -d '{"title":"Does not exist"}'
+```
+
+### Response (404 Not Found)
+
+```HTTP/1.1 404 Not Found
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 26
+ETag: W/"1a-D4dsL3U5Autp3bKNpxD/le70vNM"
+Date: Tue, 21 Jul 2026 00:03:30 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"error":"Task 99 not found"}
+```
+
+### Request : delete task
+
+```bash
+curl -i -X DELETE http://localhost:3000/tasks/3
+```
+
+### Response (204 No Content)
+
+```
+HTTP/1.1 204 No Content
+X-Powered-By: Express
+Date: Tue, 21 Jul 2026 00:04:43 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+```
+
+### Request : delete unknown id
+
+```bash
+curl -i -X DELETE http://localhost:3000/tasks/99
+```
+
+### Response (404 Not Found)
+
+```
+HTTP/1.1 404 Not Found
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 26
+ETag: W/"1a-D4dsL3U5Autp3bKNpxD/le70vNM"
+Date: Tue, 21 Jul 2026 00:05:01 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"error":"Task 99 not found"}
 ```
