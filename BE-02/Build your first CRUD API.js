@@ -1,6 +1,14 @@
-const express = require('express')
+const express = require('express');
+const Database = require('better-sqlite3');
+const path = require('path');
+
+// Point to your existing tasks.db inside the 'db' directory
+const dbPath = path.join(__dirname, '..', 'db', 'tasks.db');
+const db = new Database(dbPath);
+
 const app = express();
 const port = 3000;
+
 app.use(express.json());
 
 const swaggerUi = require("swagger-ui-express");
@@ -24,17 +32,25 @@ let list = [{ id: 1, title: "task1", done: true }
   , { id: 3, title: "task3", done: true }]
 
 app.get("/tasks", (req, res) => {
-  if (!list || list.length === 0) {
+  const countStmt = db.prepare('SELECT COUNT(*) AS count FROM tasks');
+  const { count } = countStmt.get();
+  if (count === 0) {
     return res.status(404).send({ error : "No tasks found" });
   }
   else {
-  res.status(200).json(list);
+  const selectStmt = db.prepare('SELECT * FROM tasks');
+  taskList = selectStmt.all();
+  res.status(200).json(taskList);
 }
 });
 
+
+
 app.get("/tasks/:id", (req, res) => {
   const taskId = parseInt(req.params.id);
-  const task = list.find(task => task.id === taskId);
+  const selectStmt = db.prepare('SELECT * FROM tasks WHERE id = ?');
+  const task = selectStmt.get(taskId);
+ 
   if (!task) {
     return res.status(404).send({ error: `Task ${taskId} not found` });
   }
