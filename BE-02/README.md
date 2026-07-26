@@ -160,7 +160,7 @@ SELECT * FROM tasks;
 ### SQL Query Screenshot
 
 
-![SQL Query Screenshot](SQL Query Screenshot.png)
+![SQL Query Screenshot](SQLQueryScreenshot.png)
 
 ---
 
