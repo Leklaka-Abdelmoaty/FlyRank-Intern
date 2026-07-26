@@ -27,10 +27,6 @@ app.listen(port, () => {
 });
 
 
-let list = [{ id: 1, title: "task1", done: true }
-  , { id: 2, title: "task2", done: false }
-  , { id: 3, title: "task3", done: true }]
-
 app.get("/tasks", (req, res) => {
   const countStmt = db.prepare('SELECT COUNT(*) AS count FROM tasks');
   const { count } = countStmt.get();
@@ -109,14 +105,14 @@ app.delete("/tasks/:id", (req, res) => {
         return res.status(404).send({ error: `Task ${taskId} not found` });
     }
 
-    // list.splice(taskIndex, 1);
-
     return res.status(204).end();
 });
 
 app.get("/stats", (req, res) => {
-  const totalTasks = list.length;
-  const completedTasks = list.filter(task => task.done).length;
-  const pendingTasks = totalTasks - completedTasks;
-  res.status(200).json({ "total":totalTasks, "done":completedTasks, "pending":pendingTasks });
+  const countStmt = db.prepare('SELECT COUNT(*) AS count FROM tasks');
+  const { count } = countStmt.get();
+  const completedTasksStmt = db.prepare('SELECT COUNT(*) AS count FROM tasks WHERE done = 1');
+  const { count: completedTasks } = completedTasksStmt.get();
+  const pendingTasks = count - completedTasks;
+  res.status(200).json({ "total": count, "done": completedTasks, "pending": pendingTasks });
 });
