@@ -63,13 +63,15 @@ app.post("/tasks", (req, res) => {
     return res.status(400).send({ error: "Title is required" });
   }
 
+ 
+  const insertStmt = db.prepare('INSERT INTO tasks (title, done) VALUES (?, ?)');
+  const result = insertStmt.run(task.title, task.done ? 1 : 0);
   const newTask = {
-    id: list.length + 1,
+    id: result.lastInsertRowid,
     title: task.title,
-    done: false
+    done: task.done
   };
-
-  list.push(newTask);
+ 
 
   return res.status(201).json(newTask);
 });
