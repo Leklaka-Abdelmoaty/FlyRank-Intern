@@ -10,7 +10,7 @@ A simple RESTful Task API built with **Node.js**, **Express**, and **Swagger UI*
 - Request validation
 - JSON responses
 - Swagger UI documentation
-- In-memory data storage (no database)
+- SQLite database for persistent storage
 
 ---
 
@@ -18,8 +18,35 @@ A simple RESTful Task API built with **Node.js**, **Express**, and **Swagger UI*
 
 - Node.js
 - Express.js
+- SQLite
 - Swagger UI Express
 - OpenAPI 3.0
+
+---
+
+## Why SQLite?
+
+SQLite was chosen because it stores the entire database in a **single file**, requires **zero setup**, and preserves data between server restarts. These features make it an excellent choice for small projects and learning REST API development.
+
+---
+
+## Database
+
+The application automatically creates a SQLite database file named:
+
+```text
+tasks.db
+```
+
+The database file is created automatically when the project is run for the first time. It is usually added to `.gitignore` so each clone of the repository starts with a fresh database.
+
+### Database Screenshot
+
+> **📷 Insert DB Browser for SQLite screenshot here**
+
+```text
+[ DB Browser Screenshot ]
+```
 
 ---
 
@@ -116,23 +143,38 @@ Open:
 http://localhost:3000/docs
 ```
 
-### Swagger Home
+## Swagger Demo
 
-> **📷 Insert Swagger UI screenshot here**
+![Swagger Demo](swagger-demo.gif)
 
+---
+
+# Example SQL Query (Stage 4)
+
+The following query was used during Stage 4 to retrieve all tasks from the database:
+
+```sql
+SELECT * FROM tasks;
 ```
-[ Swagger Screenshot ]
+
+### SQL Query Screenshot
+
+> **📷 Insert SQL query result screenshot here**
+
+```text
+[ SQL Query Screenshot ]
 ```
 
 ---
 
 # Project Structure
 
-```
+```text
 BE-02/
 │
 ├── Build your first CRUD API.js
 ├── openapi.json
+├── tasks.db
 ├── package.json
 ├── package-lock.json
 └── README.md
@@ -142,6 +184,7 @@ BE-02/
 
 # Notes
 
-- Data is stored in memory.
-- Restarting the server resets the task list.
+- Data is stored in a SQLite database.
+- The database file (`tasks.db`) is created automatically.
+- SQLite preserves data between server restarts.
 - API documentation is generated using OpenAPI 3.0 and served with Swagger UI.
