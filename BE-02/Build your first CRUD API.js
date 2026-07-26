@@ -72,15 +72,17 @@ app.post("/tasks", (req, res) => {
     done: task.done
   };
  
-
   return res.status(201).json(newTask);
 });
 
 app.put("/tasks/:id", (req, res) => {
   const task = req.body;
   const taskId = parseInt(req.params.id);
-  const taskIndex = list.findIndex(task => task.id === taskId);
-  if (taskIndex === -1) {
+
+  const updateStmt = db.prepare('UPDATE tasks SET title = ?, done = ? WHERE id = ?');
+  const result = updateStmt.run(task.title, task.done ? 1 : 0, taskId);
+
+  if (result.changes === 0) {
     return res.status(404).send({ error: `Task ${taskId} not found` });
   }
   if (!task || !task.title || task.title.trim() === "") {
@@ -90,22 +92,24 @@ app.put("/tasks/:id", (req, res) => {
     return res.status(400).send({ error: "Bad Request" });
   }
   else {
-    list[taskIndex] = { ...list[taskIndex], title: task.title, done: task.done };
-    return res.status(200).json(list[taskIndex]);
+    const selectStmt = db.prepare('SELECT * FROM tasks WHERE id = ?');
+    const task = selectStmt.get(taskId);
+    return res.status(200).json(task);
+
   }
 });
 
 
 app.delete("/tasks/:id", (req, res) => {
     const taskId = parseInt(req.params.id);
+    const deleteStmt = db.prepare('DELETE FROM tasks WHERE id = ?');
+    const result = deleteStmt.run(taskId);
 
-    const taskIndex = list.findIndex(task => task.id === taskId);
-
-    if (taskIndex === -1) {
+    if (result.changes === 0) {
         return res.status(404).send({ error: `Task ${taskId} not found` });
     }
 
-    list.splice(taskIndex, 1);
+    // list.splice(taskIndex, 1);
 
     return res.status(204).end();
 });
