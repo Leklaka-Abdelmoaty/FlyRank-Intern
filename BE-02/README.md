@@ -159,11 +159,8 @@ SELECT * FROM tasks;
 
 ### SQL Query Screenshot
 
-> **📷 Insert SQL query result screenshot here**
 
-```text
-[ SQL Query Screenshot ]
-```
+![SQL Query Screenshot](SQL Query Screenshot.png)
 
 ---
 
