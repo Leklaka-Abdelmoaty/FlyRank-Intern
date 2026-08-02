@@ -146,6 +146,7 @@ http://localhost:3000/docs
 ## Swagger Demo
 
 ![Swagger Demo](swagger-demo.gif)
+<<<<<<< HEAD
 
 ---
 
@@ -161,6 +162,8 @@ SELECT * FROM tasks;
 
 
 ![SQL Query Screenshot](SQLQueryScreenshot.png)
+=======
+>>>>>>> main
 
 ---
 
@@ -181,7 +184,13 @@ BE-02/
 
 # Notes
 
+<<<<<<< HEAD
 - Data is stored in a SQLite database.
 - The database file (`tasks.db`) is created automatically.
 - SQLite preserves data between server restarts.
 - API documentation is generated using OpenAPI 3.0 and served with Swagger UI.
+=======
+- Data is stored in memory.
+- Restarting the server resets the task list.
+- API documentation is generated using OpenAPI 3.0 and served with Swagger UI.
+>>>>>>> main
