@@ -1,5 +1,5 @@
 import express from "express";
-import pool, { initializeDatabase } from "./db.js";
+import pool, { initializeDatabase,getAllTasks,getTaskById } from "./db.js";
 
 const app = express();
 const PORT = 3000;
@@ -10,8 +10,24 @@ await initializeDatabase();
 
 app.get("/tasks", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM tasks ORDER BY id;");
-    res.json(result.rows);
+    const tasks = await getAllTasks();
+    res.json(tasks);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.get("/tasks/:id", async (req, res) => {
+  try {
+    const task = await getTaskById(req.params.id);
+
+    if (!task) {
+      return res.status(404).json({
+        error: "Task not found",
+      });
+    }
+
+    res.json(task);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
